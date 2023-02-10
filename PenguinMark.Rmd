@@ -1,0 +1,43 @@
+---
+title: "PenguinMark"
+author: "Cormac"
+date: '2023-02-10'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+## Data
+The dataset being used plots physical attributes of three different types of penguin: Adelie, Gentoo, and Chinstrap penguins
+
+```{r, echo=FALSE, out.width="50%", fig.cap="A nice image."}
+knitr::include_graphics("https://www.antarctica.gov.au/site/assets/files/45561/rs35470_dsc_4869.1600x0.jpg")
+```
+
+## Single trait distribution
+```{r}
+penguins %>%
+  ggplot() +
+  geom_density(mapping = aes(x = bill_length_mm, fill=species), alpha=0.5)
+```
+
+It seems that, in regards to penguin bill length, chinstrap penguins typically have longer bills, while Adelie usually possess the shortest bills. However, this is not always the case, as even some Adelie penguins can have longer bills than some chinstraps.
+
+## Relationship between multiple traits
+```{r}
+ggplot(data = penguins, aes(x = body_mass_g, y = bill_length_mm, color = species)) +
+  geom_point() +
+  geom_smooth()
+```
+
+Examining this table, it seems that body mass does not have much of a correlation to bill-length. For example, even though Adelie and Chinstrap penguins have similar body mass, bill length is vastly different, with Chinstrap almost always having a longer bill length.
+## Sexual dimorphism
+```{r}
+ggplot(data = penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = sex)) +
+  geom_point()
+```
